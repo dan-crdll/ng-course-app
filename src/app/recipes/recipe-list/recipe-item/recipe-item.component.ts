@@ -16,7 +16,6 @@ export class RecipeItemComponent {
     private route: ActivatedRoute) { }
 
   onClick() {
-    this.recipeService.recipeSelected.emit(this.recipe);
     this.router.navigate([this.recipe.id], {relativeTo: this.route})
   }
 }
