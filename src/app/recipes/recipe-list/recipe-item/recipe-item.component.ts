@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { Recipe } from '../../recipe.model';
-import { RecipeService } from '../recipe.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -11,11 +10,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class RecipeItemComponent {
   @Input() recipe!: Recipe;
 
-  constructor(private recipeService: RecipeService,
+  constructor(
     private router: Router,
     private route: ActivatedRoute) { }
 
   onClick() {
-    this.router.navigate([this.recipe.id], {relativeTo: this.route})
+    this.router.navigate([this.recipe.id], { relativeTo: this.route })
   }
 }
