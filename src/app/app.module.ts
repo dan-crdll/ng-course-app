@@ -13,12 +13,14 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { AppRoutingModule } from './modules/app-routing.module';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './Auth/auth/auth.component'
 import { AuthInterceptorService } from './Auth/auth/auth-interceptor.service';
-import {StoreModule} from "@ngrx/store";
+import { StoreModule } from "@ngrx/store";
 import { shoppingListReducer } from './shopping-list/store/shopping-list.reducer';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
+import { authReducer } from './Auth/store/auth.reducer';
+import * as fromApp from './store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -41,9 +43,9 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot({shoppingList: shoppingListReducer}),
+    StoreModule.forRoot(fromApp.appReducer),
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

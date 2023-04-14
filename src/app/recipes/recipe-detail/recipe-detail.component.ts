@@ -5,6 +5,7 @@ import { RecipeService } from '../recipe-list/recipe.service';
 import { Store } from '@ngrx/store';
 import { AddIngredients } from 'src/app/shopping-list/store/shopping-list.actions';
 import * as fromSL from 'src/app/shopping-list/store/shopping-list.reducer';
+import * as fromApp from '../../store/app.reducer'
 
 @Component({
   selector: 'app-recipe-detail',
@@ -19,7 +20,7 @@ export class RecipeDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private recipeService: RecipeService,
-    private store: Store<fromSL.AppState>) { }
+    private store: Store<fromApp.AppState>) { }
 
   ngOnInit(): void {
     this.route.params
@@ -41,6 +42,6 @@ export class RecipeDetailComponent implements OnInit {
 
   onDeleteRecipe() {
     this.recipeService.deleteRecipe(this.id);
-    this.router.navigate(['../', {relativeTo: this.route}])
+    this.router.navigate(['../', { relativeTo: this.route }])
   }
 }

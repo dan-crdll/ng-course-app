@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Ingredient } from 'src/app/shared/ingredients.model';
 import * as SLActions from '../store/shopping-list.actions'
 import * as fromSL from '../store/shopping-list.reducer';
+import * as fromApp from '../../store/app.reducer'
 
 @Component({
   selector: 'app-shopping-edit',
@@ -17,7 +18,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editedItem!: Ingredient;
   @ViewChild('f') slForm!: NgForm;
 
-  constructor(private store: Store<fromSL.AppState>) { }
+  constructor(private store: Store<fromApp.AppState>) { }
 
   onAddItem(form: NgForm): void {
     const value = form.value;

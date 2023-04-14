@@ -3,6 +3,9 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, tap } from "rxjs";
 import { User } from "./user.model";
 import { Router } from "@angular/router";
+import * as AuthActions from '../store/auth.actions';
+import * as fromApp from '../../store/app.reducer'
+import { Store } from "@ngrx/store";
 
 export interface AuthResponseData {
     kind: string;
@@ -16,10 +19,10 @@ export interface AuthResponseData {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    user = new BehaviorSubject<User | null>(null);
+    //user = new BehaviorSubject<User | null>(null);
     private tokenExpirationTimer: any;
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient, private router: Router, private store: Store<fromApp.AppState>) { }
 
     signUp(email: string, password: string) {
         return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAwjZWoyQo0QIBcUoCFt0OpxQl9XYx83kg',
@@ -52,13 +55,13 @@ export class AuthService {
             localId,
             token,
             new Date(new Date().getTime() + expiresIn * 1000))
-        this.user.next(user);
+        this.store.dispatch(new AuthActions.Login(user));
         this.autoLogOut(expiresIn * 1000);
         localStorage.setItem('userData', JSON.stringify(user));
     }
 
     logout() {
-        this.user.next(null);
+        this.store.dispatch(new AuthActions.Logout());
         this.router.navigate(['/auth']);
         localStorage.removeItem('userData');
         if (this.tokenExpirationTimer) {
@@ -82,7 +85,7 @@ export class AuthService {
             const loadedUser = new User(userObj.email, userObj.id, userObj._token, new Date(userObj._tokenExpirationDate));
 
             if (loadedUser.token) {
-                this.user.next(loadedUser);
+                this.store.dispatch(new AuthActions.Login(loadedUser));
                 this.autoLogOut(
                     new Date(userObj._tokenExpirationDate).getTime() - new Date().getTime()
                 )

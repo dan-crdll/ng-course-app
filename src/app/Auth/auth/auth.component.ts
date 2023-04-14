@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { AuthResponseData, AuthService } from './auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import * as fromApp from '../../store/app.reducer'
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-auth',
@@ -11,7 +13,7 @@ import { Router } from '@angular/router';
 export class AuthComponent {
   isLoginMode = true;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private store: Store<fromApp.AppState>) { }
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
