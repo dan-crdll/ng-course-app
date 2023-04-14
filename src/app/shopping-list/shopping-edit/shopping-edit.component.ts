@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Subscription, from } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Ingredient } from 'src/app/shared/ingredients.model';
-import { ShoppingListService } from 'src/app/shared/shopping-list.service';
 import * as SLActions from '../store/shopping-list.actions'
 import * as fromSL from '../store/shopping-list.reducer';
 
@@ -18,7 +17,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editedItem!: Ingredient;
   @ViewChild('f') slForm!: NgForm;
 
-  constructor(public slService: ShoppingListService, private store: Store<fromSL.AppState>) { }
+  constructor(private store: Store<fromSL.AppState>) { }
 
   onAddItem(form: NgForm): void {
     const value = form.value;

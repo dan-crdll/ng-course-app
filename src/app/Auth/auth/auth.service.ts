@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Subject, tap } from "rxjs";
+import { BehaviorSubject, tap } from "rxjs";
 import { User } from "./user.model";
 import { Router } from "@angular/router";
 
